@@ -104,15 +104,18 @@ class AnimSearchBar extends StatefulWidget {
   _AnimSearchBarState createState() => _AnimSearchBarState();
 }
 
-///toggle - 0 => false or closed
-///toggle 1 => true or open
-int toggle = 0;
 
-/// * use this variable to check current text from OnChange
-String textFieldValue = '';
 
 class _AnimSearchBarState extends State<AnimSearchBar>
     with SingleTickerProviderStateMixin {
+      ///toggle - 0 => false or closed
+      ///toggle 1 => true or open
+        int toggle = 0;
+
+        /// * use this variable to check current text from OnChange
+        String textFieldValue = '';
+
+        
   ///initializing the AnimationController
   late AnimationController _con;
   FocusNode focusNode = FocusNode();
