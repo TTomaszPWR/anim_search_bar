@@ -43,6 +43,7 @@ class AnimSearchBar extends StatefulWidget {
   final Function(String) onSubmitted;
   final TextInputAction textInputAction;
   final Function(int) searchBarOpen;
+  final void Function(String newVal)? onChanged;
   const AnimSearchBar({
     Key? key,
 
@@ -95,6 +96,8 @@ class AnimSearchBar extends StatefulWidget {
 
     /// can add list of inputformatters to control the input
     this.inputFormatters,
+
+    this.onChanged,
   }) : super(key: key);
 
   @override
@@ -263,6 +266,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                     cursorWidth: 2.0,
                     onChanged: (value) {
                       textFieldValue = value;
+                      widget.onChanged?.call(value);
                     },
                     onSubmitted: (value) => {
                       widget.onSubmitted(value),
