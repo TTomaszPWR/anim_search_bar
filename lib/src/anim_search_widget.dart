@@ -115,7 +115,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
         /// * use this variable to check current text from OnChange
         String textFieldValue = '';
 
-        
+
   ///initializing the AnimationController
   late AnimationController _con;
   FocusNode focusNode = FocusNode();
@@ -207,9 +207,9 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                             _con.reverse();
                           }
 
-                          // * why not clear textfield here?
-                          widget.textController.clear();
-                          textFieldValue = '';
+                          // // * why not clear textfield here?
+                          // widget.textController.clear();
+                          // textFieldValue = '';
 
                           ///closeSearchOnSuffixTap will execute if it's true
                           if (widget.closeSearchOnSuffixTap) {
