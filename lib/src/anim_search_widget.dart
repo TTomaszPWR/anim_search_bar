@@ -277,7 +277,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                       setState(() {
                         toggle = 0;
                       }),
-                      widget.textController.clear(),
+                      // widget.textController.clear(),
                     },
                     onEditingComplete: () {
                       /// on editing complete the keyboard will be closed and the search bar will be closed
