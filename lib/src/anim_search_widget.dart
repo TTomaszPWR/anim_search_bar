@@ -44,6 +44,9 @@ class AnimSearchBar extends StatefulWidget {
   final TextInputAction textInputAction;
   final Function(int) searchBarOpen;
   final void Function(String newVal)? onChanged;
+  final bool clearOnSuffixTap;
+  final bool clearOnClose;
+
   const AnimSearchBar({
     Key? key,
 
@@ -98,6 +101,8 @@ class AnimSearchBar extends StatefulWidget {
     this.inputFormatters,
 
     this.onChanged,
+    this.clearOnSuffixTap = false,
+    this.clearOnClose = false,
   }) : super(key: key);
 
   @override
@@ -208,8 +213,11 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                           }
 
                           // // * why not clear textfield here?
-                          // widget.textController.clear();
-                          // textFieldValue = '';
+                          if (widget.clearOnSuffixTap) {
+                          widget.textController.clear();
+                          textFieldValue = '';
+                          widget.onChanged?.call("");
+                        }
 
                           ///closeSearchOnSuffixTap will execute if it's true
                           if (widget.closeSearchOnSuffixTap) {
@@ -369,6 +377,10 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                     },
 
                   );
+                  if (toggle == 0 &&  widget.clearOnClose) {
+                          widget.textController.clear();
+                          textFieldValue = '';
+                        }
                   widget.searchBarOpen(toggle);
                 },
               ),
