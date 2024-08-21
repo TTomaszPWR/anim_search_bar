@@ -6,7 +6,6 @@ class AnimSearchBar extends StatefulWidget {
   ///  width - double ,isRequired : Yes
   ///  textController - TextEditingController  ,isRequired : Yes
   ///  onSuffixTap - Function, isRequired : Yes
-  ///  onSubmitted - Function, isRequired : Yes
   ///  rtl - Boolean, isRequired : No
   ///  autoFocus - Boolean, isRequired : No
   ///  style - TextStyle, isRequired : No
@@ -40,12 +39,12 @@ class AnimSearchBar extends StatefulWidget {
   final Color? textFieldIconColor;
   final List<TextInputFormatter>? inputFormatters;
   final bool boxShadow;
-  final Function(String) onSubmitted;
   final TextInputAction textInputAction;
   final Function(int) searchBarOpen;
   final void Function(String newVal)? onChanged;
   final bool clearOnSuffixTap;
   final bool clearOnClose;
+  final bool closeOnSubmit;
 
   const AnimSearchBar({
     Key? key,
@@ -79,8 +78,6 @@ class AnimSearchBar extends StatefulWidget {
     required this.onSuffixTap,
     this.animationDurationInMilli = 375,
 
-    /// The onSubmitted cannot be null
-    required this.onSubmitted,
     
     /// make the search bar to open from right to left
     this.rtl = false,
@@ -103,6 +100,7 @@ class AnimSearchBar extends StatefulWidget {
     this.onChanged,
     this.clearOnSuffixTap = false,
     this.clearOnClose = false,
+    this.closeOnSubmit = true,
   }) : super(key: key);
 
   @override
@@ -207,6 +205,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                             setState(() {
                               toggle = 0;
                             });
+                            widget.searchBarOpen(toggle);
 
                             ///reverse == close
                             _con.reverse();
@@ -279,20 +278,23 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                       textFieldValue = value;
                       widget.onChanged?.call(value);
                     },
-                    onSubmitted: (value) => {
-                      widget.onSubmitted(value),
-                      unfocusKeyboard(),
-                      setState(() {
-                        toggle = 0;
-                      }),
+                    onSubmitted: (value) {
+                     if(widget.closeOnSubmit) {
+                        unfocusKeyboard();
+                        setState(() {
+                          toggle = 0;
+                        });
+                     }
                       // widget.textController.clear(),
                     },
                     onEditingComplete: () {
                       /// on editing complete the keyboard will be closed and the search bar will be closed
-                      unfocusKeyboard();
-                      setState(() {
-                        toggle = 0;
-                      });
+                     if(widget.closeOnSubmit) {
+                        unfocusKeyboard();
+                        setState(() {
+                          toggle = 0;
+                        });
+                     }
                     },
 
                     ///style is of type TextStyle, the default is just a color black
